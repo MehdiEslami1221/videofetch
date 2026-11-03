@@ -1,0 +1,384 @@
+{
+  "info": {
+    "name": "VideoFetch API • Local",
+    "description": "Independent API checks for local Spring Boot. Remote download only when you own the media or hold permission. The example source URLs for remote processing are placeholders; edit before testing. Upload requires selecting a file in Postman.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "jobId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "01 Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"server is healthy\",()=>pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 Tools",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/system/tools",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "system",
+            "tools"
+          ]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"tool status is returned\",()=>pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 Preview YouTube",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/videos/info",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "videos",
+            "info"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"https://www.youtube.com/watch?v=L1x3MRcgHw0\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 Preview Instagram",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/videos/info",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "videos",
+            "info"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"https://www.instagram.com/reel/EXAMPLE_ID/\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05 Preview TikTok",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/videos/info",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "videos",
+            "info"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"https://www.tiktok.com/@creator/video/7412345678901234567\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "06 Queue remote MP4",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/downloads",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "downloads"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"https://www.youtube.com/watch?v=YOUR_AUTHORIZED_ID\",\n  \"format\": \"MP4\",\n  \"maxHeight\": 720,\n  \"rightsConfirmed\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if(pm.response.code===202){pm.collectionVariables.set(\"jobId\",pm.response.json().id)}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 Queue remote MP3",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/downloads",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "downloads"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"https://www.youtube.com/watch?v=YOUR_AUTHORIZED_ID\",\n  \"format\": \"MP3\",\n  \"maxHeight\": 720,\n  \"rightsConfirmed\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if(pm.response.code===202){pm.collectionVariables.set(\"jobId\",pm.response.json().id)}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 Upload owned file as MP3",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/uploads",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "uploads"
+          ]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": ""
+            },
+            {
+              "key": "format",
+              "type": "text",
+              "value": "MP3"
+            },
+            {
+              "key": "maxHeight",
+              "type": "text",
+              "value": "720"
+            },
+            {
+              "key": "rightsConfirmed",
+              "type": "text",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if(pm.response.code===202){pm.collectionVariables.set(\"jobId\",pm.response.json().id)}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 Poll last job",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/downloads/{{jobId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "downloads",
+            "{{jobId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10 Download completed file",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/downloads/{{jobId}}/file",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "downloads",
+            "{{jobId}}",
+            "file"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Preview direct Instagram Story (requires an accessible valid story link)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/videos/info",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "videos",
+            "info"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"url\": \"https://www.instagram.com/stories/example.user/12345678901234567/\"}"
+        }
+      },
+      "response": []
+    }
+  ]
+}

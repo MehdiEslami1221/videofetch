@@ -1,0 +1,14 @@
+/target/
+/.idea/
+*.iml
+/data/
+/tools/bin/
+/tools/.setup-temp/
+/tmp/
+.env
+*.log
+.DS_Store
+/.tools/
+
+*.cookies
+cookies.txt

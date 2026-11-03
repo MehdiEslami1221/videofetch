@@ -1,0 +1,31 @@
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: never
+  tomcat:
+    max-swallow-size: 130MB
+spring:
+  application:
+    name: videofetch
+  servlet:
+    multipart:
+      max-file-size: 120MB
+      max-request-size: 121MB
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+videofetch:
+  tools-dir: ${VIDEOFETCH_TOOLS_DIR:./tools/bin}
+  storage-dir: ${VIDEOFETCH_STORAGE_DIR:./data/jobs}
+  proxy-url: ${VIDEOFETCH_PROXY_URL:}
+  js-runtime: ${VIDEOFETCH_JS_RUNTIME:node}
+  cookies-file: ${VIDEOFETCH_COOKIES_FILE:}
+  max-file-bytes: 125829120
+  max-duration-seconds: 3600
+  workers: 2
+  queue-capacity: 6
+  job-ttl-minutes: 60
+  process-timeout-seconds: 900
+  cors-origin: ${VIDEOFETCH_CORS_ORIGIN:http://localhost:3000}

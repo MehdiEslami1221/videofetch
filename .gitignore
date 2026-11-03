@@ -1,0 +1,26 @@
+# Local configuration and credentials
+**/.env
+**/.env.*
+!**/.env.example
+**/*cookies*
+**/*secret*
+
+# Java / Maven / IDE
+**/target/
+**/.tools/
+**/.idea/
+**/*.iml
+
+# Next.js / Node
+**/node_modules/
+**/.next/
+**/out/
+**/*.tsbuildinfo
+
+# Runtime data and local executable tools
+**/data/
+**/tools/
+**/tmp/
+**/logs/
+**/*.log
+.DS_Store
